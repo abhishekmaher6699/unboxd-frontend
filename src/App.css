@@ -1,0 +1,10 @@
+.rating_tooltip {
+    z-index: 30;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+html, body {
+    overflow: auto;
+}
