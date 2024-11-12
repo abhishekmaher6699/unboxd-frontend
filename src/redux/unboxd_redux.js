@@ -16,7 +16,7 @@ export const fetchStatsData = createAsyncThunk('data/fetchStatsData', async ({ u
     }
     
     try {
-        const response = await axios.get(`https://unboxd-backend-4.onrender.com//movies-data/?user=${username}`);
+        const response = await axios.get(`https://unboxd-backend-4.onrender.com/movies-data/?user=${username}`);
         const data = response.data;
         const timestamp = new Date().toISOString();
         localStorage.setItem(localStorageKey, JSON.stringify({ ...data, fetchedAt: timestamp }));
@@ -45,7 +45,7 @@ export const fetchReviewsData = createAsyncThunk('data/fetchReviewsData', async 
     }
 
     try {
-        const response = await axios.get(`https://unboxd-backend-4.onrender.com//reviews/?user=${username}`);
+        const response = await axios.get(`https://unboxd-backend-4.onrender.com/reviews/?user=${username}`);
         const data = response.data;
         const timestamp = new Date().toISOString();
         localStorage.setItem(localStorageKey, JSON.stringify({ reviews: data, fetchedAt: timestamp }));
