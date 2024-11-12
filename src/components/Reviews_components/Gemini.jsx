@@ -6,7 +6,7 @@ function Gemini({ data, username }) {
     const [loading, setLoading] = useState(false);
     const [apiData, setApiData] = useState('');
     const [reviews, setReviews] = useState([]);
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_KEY);
+    const genAI = new GoogleGenerativeAI(process.env.VITE_APP_GEMINI_KEY);
 
     useEffect(() => {
         if (!data) return;

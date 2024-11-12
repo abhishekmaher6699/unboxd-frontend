@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const API_KEY = process.env.TMDB_KEY
+const API_KEY = process.env.VITE_APP_TMDB_KEY
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 const RecommendationsList = ({ data }) => {
