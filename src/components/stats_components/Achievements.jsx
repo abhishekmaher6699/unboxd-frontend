@@ -1,143 +1,133 @@
-import React, {useEffect, useState} from 'react'
-import obscurityIcon from "../../assets/obscurity.svg";
-import languagesIcon from "../../assets/languages.svg";
-import timeTravellerIcon from "../../assets/time_traveller.svg";
-import lightbulbIcon from "../../assets/lightbulb.svg";
-import genresIcon from "../../assets/genres.svg";
-import directorIcon from "../../assets/director.svg";
-import reviewerIcon from "../../assets/reviewer.svg";
-import starIcon from "../../assets/star.svg";
-import zoomInIcon from "../../assets/zoom_in.svg";
-import travellerIcon from "../../assets/traveller.svg";
+import React, { useState } from 'react';
 
 const achievements_to_svg = {
   'Traveller 1': { 
-    src: obscurityIcon, 
+    src: '/assets/obscurity.svg', 
     color: 'bg-blue-600', 
     text: "You have explored more than 25 countries" 
   },
   'Traveller 2': { 
-    src: obscurityIcon, 
+    src: '/assets/obscurity.svg', 
     color: 'bg-green-600', 
     text: "You have explored more than 50 countries" 
   },
   'Traveller 3': { 
-    src: obscurityIcon, 
+    src: '/assets/obscurity.svg', 
     color: 'bg-red-600', 
     text: "You have explored more than 100 countries" 
   },
   'Linguist 1': { 
-    src: languagesIcon, 
+    src: '/assets/languages.svg', 
     color: 'bg-blue-600', 
     text: "You have explored more than 25 languages" 
   },
   'Linguist 2': { 
-    src: languagesIcon, 
+    src: '/assets/languages.svg', 
     color: 'bg-green-600', 
     text: "You have explored more than 50 languages" 
   },
   'Linguist 3': { 
-    src: languagesIcon, 
+    src: '/assets/languages.svg', 
     color: 'bg-red-600', 
     text: "You have explored more than 100 languages" 
   },
   'Time Traveller 1': { 
-    src: timeTravellerIcon, 
+    src: '/assets/time_traveller.svg', 
     color: 'bg-blue-600', 
     text: "You have watched movies from more than 5 decades" 
   },
   'Time Traveller 2': { 
-    src: timeTravellerIcon, 
+    src: '/assets/time_traveller.svg', 
     color: 'bg-green-600', 
     text: "You have watched movies from more than 8 decades" 
   },
   'Time Traveller 3': { 
-    src: timeTravellerIcon, 
+    src: '/assets/time_traveller.svg', 
     color: 'bg-red-600', 
     text: "You have watched movies from more than 10 decades" 
   },
   'Theme Explorer 1': { 
-    src: lightbulbIcon, 
+    src: '/assets/lightbulb.svg', 
     color: 'bg-blue-600', 
     text: "You have explored more than 50 themes in movies" 
   },
   'Theme Explorer 2': { 
-    src: lightbulbIcon, 
+    src: '/assets/lightbulb.svg', 
     color: 'bg-green-600', 
     text: "You have explored more than 75 themes in movies" 
   },
   'Theme Explorer 3': { 
-    src: lightbulbIcon, 
+    src: '/assets/lightbulb.svg', 
     color: 'bg-red-600', 
     text: "You have explored more than 100 themes in movies" 
   },
   'Genre Master': { 
-    src: genresIcon, 
+    src: '/assets/genres.svg', 
     color: 'bg-purple-600', 
     text: "You have watched all 20 genres" 
   },
   'Director Explorer 1': { 
-    src: directorIcon, 
+    src: '/assets/director.svg', 
     color: 'bg-blue-600', 
     text: "You have explored more than 25 directors" 
   },
   'Director Explorer 2': { 
-    src: directorIcon, 
+    src: '/assets/director.svg', 
     color: 'bg-green-600', 
     text: "You have explored more than 50 directors" 
   },
   'Director Explorer 3': { 
-    src: directorIcon, 
+    src: '/assets/director.svg', 
     color: 'bg-red-600', 
     text: "You have explored more than 100 directors" 
   },
   'Reviewer 1': { 
-    src: reviewerIcon, 
+    src: '/assets/reviewer.svg', 
     color: 'bg-blue-600', 
     text: "You have reviewed more than 50 movies" 
   },
   'Reviewer 2': { 
-    src: reviewerIcon, 
+    src: '/assets/reviewer.svg', 
     color: 'bg-green-600', 
     text: "You have reviewed more than 100 movies" 
   },
   'Reviewer 3': { 
-    src: reviewerIcon, 
+    src: '/assets/reviewer.svg', 
     color: 'bg-red-600', 
     text: "You have reviewed more than 200 movies" 
   },
   'Popular 1': { 
-    src: starIcon, 
+    src: '/assets/star.svg', 
     color: 'bg-blue-600', 
     text: "You have watched more than 50 movies from the Top 250 list" 
   },
   'Popular 2': { 
-    src: starIcon, 
+    src: '/assets/star.svg', 
     color: 'bg-green-600', 
     text: "You have watched more than 100 movies from the Top 250 list" 
   },
   'Popular 3': { 
-    src: starIcon, 
+    src: '/assets/star.svg', 
     color: 'bg-red-600', 
     text: "You have watched all 250 movies from the Top 250 list" 
   },
   'Obscure 1': { 
-    src: zoomInIcon, 
+    src: '/assets/zoom_in.svg', 
     color: 'bg-blue-600', 
     text: "You have watched more than 25 movies with less than 1000 views" 
   },
   'Obscure 2': { 
-    src: zoomInIcon, 
+    src: '/assets/zoom_in.svg', 
     color: 'bg-green-600', 
     text: "You have watched more than 50 movies with less than 1000 views" 
   },
   'Obscure 3': { 
-    src: zoomInIcon, 
+    src: '/assets/zoom_in.svg', 
     color: 'bg-red-600', 
     text: "You have watched more than 100 movies with less than 1000 views" 
   },
   'Continent!': { 
-    src: travellerIcon, 
+    src: '/assets/traveller.svg', 
     color: 'bg-blue-600', 
     text: "You have traveled to all continents (except Antarctica)" 
   }
@@ -151,7 +141,7 @@ function Achievements({ achievements }) {
     setTooltip({
       visible: true,
       content: text,
-      x: pageX + 10, // Offset for better positioning
+      x: pageX + 10,
       y: pageY + 10
     });
   };
