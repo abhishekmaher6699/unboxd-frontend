@@ -43,7 +43,7 @@ const MyWordCloud = ({ data}) => {
         width={dimensions.width}
         height={dimensions.height}
         fontSize={fontSizeSetter}
-        font={'Impact'}
+        font={'Impact, sans-serif'}
         padding={2}
         spiral={'rectangular'}
         rotate={withRotation ? () => (Math.random() > 0.5 ? 60 : -60) : 0}
