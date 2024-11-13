@@ -18,10 +18,10 @@ function UserType({ type }) {
             <p className='font-oswald text-lg text-gray-700 md:ml-20'>
             You are {isVowel(title.charAt(0)) ? 'an' : 'a'}
             </p>
-            <h2 className={`text-5xl md:text-7xl text-center font-extrabold ${cardColor}  mb-6`}>{title}</h2>
+            <h2 className={`text-5xl md:text-7xl text-center font-extrabold ${cardColor} mb-6`}>{title}</h2>
 
         </div>
-        <p className="w-[90%] md:w-[70%] text-center mt-1 md:mt-4 text-md text-gray-800 md:text-gray-600 leading-relaxed">{description}</p>
+        <p className="w-[90%] md:w-[70%] text-center mt-1 md:mt-4 text-md text-gray-600 leading-relaxed">{description}</p>
       </div>
     );
 }

@@ -22,9 +22,9 @@ function Screenshots({ data }) {
     useEffect(() => {
         document.body.style.overflow = isOpen ? 'hidden' : '';
         return () => {
-            document.body.style.overflow = ''; // Reset on cleanup
+            document.body.style.overflow = ''; 
         };
-    }, [isOpen]);
+    }, []);
 
     const downloadImage = async (id) => {
         const element = document.getElementById(id);
@@ -65,7 +65,7 @@ function Screenshots({ data }) {
 
     return (
         <div className='text-center m-10'>
-            <button onClick={() => setIsOpen(true)} className="bg-blue-500 text-white p-5 rounded hover:bg-opacity-80">
+            <button onClick={() => setIsOpen(true)} className="bg-blue-500 text-white py-3 px-5 rounded hover:bg-opacity-80">
                 Share
             </button>
             {isOpen && (
@@ -195,7 +195,7 @@ function Screenshots({ data }) {
                                 <div className='-z-10 absolute h-56 w-56 fixed bg-green-600 rounded-full -translate-x-1/3 translate-y-1/3 bottom-0 left-0'></div>
                             </div>
 
-                            <button onClick={() => { downloadImage('card-2') }} className="bg-blue-500 text-white p-2 rounded hover:bg-opacity-80 mx-2">
+                            <button onClick={() => { downloadImage('card-2') }} className="bg-blue-500 text-white p-2 rounded hover:bg-opacity-80 mx-2 mb-24">
                                 Download Card 2
                             </button>
                         </div>

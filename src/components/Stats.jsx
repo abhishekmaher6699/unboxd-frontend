@@ -112,7 +112,7 @@ function Stats() {
   }
 
   return (
-    <div className='w-full relative flex flex-col z-10 items-center justify-center mb-10 md:mb-0'>
+    <div className='w-full relative flex flex-col z-10 items-center justify-center mb-0 md:mb-0'>
       <a
         href="https://github.com/abhishekmaher6699"
         target="_blank"
