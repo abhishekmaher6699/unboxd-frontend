@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 function RatingsGraph({ data, isMobile }) {
+    const [isMounted, setIsMounted] = useState(false);
     const ratingBins = [1, 2, 3, 4, 5];
 
     const ratingData = ratingBins.map(rating => {
@@ -20,67 +21,64 @@ function RatingsGraph({ data, isMobile }) {
             toolbar: { show: false },
             background: 'transparent',
         },
-        grid: {
-            show: false, 
-          },
-        colors: ['#FF0000', '#0FFF50',],
+        grid: { show: false },
+        colors: ['#FF0000', '#0FFF50'],
         plotOptions: {
             bar: {
                 horizontal: false,
                 columnWidth: '80%',
                 dataLabels: {
-                    enabled: true, 
+                    enabled: true,
                     style: {
-                        fontSize: '12px', 
-                        fontFamily: 'Arial, sans-serif', 
-                        fontWeight: 'normal', 
-                        colors: ['white'], 
+                        fontSize: '12px',
+                        fontFamily: 'Arial, sans-serif',
+                        fontWeight: 'normal',
+                        colors: ['white'],
                     },
-                    formatter: (val) => val, 
+                    formatter: (val) => val,
                 },
             },
         },
         xaxis: {
             categories: ratingBins,
-            title: { text: 'Rating', style: {
-                fontFamily: 'Oswald, sans-serif',  
-                fontSize: '12px', 
-                fontWeight: 'light', 
-                color: 'white',
-            } },
+            title: {
+                text: 'Rating',
+                style: {
+                    fontFamily: 'Oswald, sans-serif',
+                    fontSize: '12px',
+                    fontWeight: 'light',
+                    color: 'white',
+                },
+            },
             labels: { style: { colors: 'white' } },
         },
         yaxis: {
-            title: { text: 'Count', style: {
-                fontFamily: 'Oswald, sans-serif',  
-                fontSize: '12px', 
-                fontWeight: 'light', 
-                color: 'white',
-            } },
+            title: {
+                text: 'Count',
+                style: {
+                    fontFamily: 'Oswald, sans-serif',
+                    fontSize: '12px',
+                    fontWeight: 'light',
+                    color: 'white',
+                },
+            },
             labels: { style: { colors: 'white' } },
         },
         tooltip: {
             enabled: true,
-            style: {
-                fontSize: '14px',
-                fontFamily: undefined,
-            },
-            y: {
-                formatter: (val) => `${val} movies`,
-            },
+            style: { fontSize: '14px' },
+            y: { formatter: (val) => `${val} movies` },
         },
-        legend: {
-            // labels: { colors: 'white' },
-            show: false
-        },
+        legend: { show: false },
         title: {
             text: 'Rating Count',
             align: 'center',
             style: {
-                fontFamily: 'Oswald, sans-serif',  
-                fontSize: '16px', 
-                fontWeight: 'light', 
-                color: 'white', },
+                fontFamily: 'Oswald, sans-serif',
+                fontSize: '16px',
+                fontWeight: 'light',
+                color: 'white',
+            },
         },
     };
 
@@ -89,14 +87,21 @@ function RatingsGraph({ data, isMobile }) {
         { name: 'Liked', data: likedData },
     ];
 
+    useEffect(() => {
+        // Set isMounted to true once the component has fully mounted
+        setIsMounted(true);
+    }, []);
+
     return (
-        <div>
-            <ReactApexChart
-                options={chartOptions}
-                series={chartSeries}
-                type="bar"
-                height={(isMobile ? 300 : 400)}
-            />
+        <div style={{ height: isMobile ? '300px' : '400px' }}>
+            {isMounted && (
+                <ReactApexChart
+                    options={chartOptions}
+                    series={chartSeries}
+                    type="bar"
+                    height="100%"
+                />
+            )}
         </div>
     );
 }

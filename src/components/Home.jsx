@@ -41,7 +41,7 @@ function Home() {
                 href="https://github.com/abhishekmaher6699" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="absolute z-10 top-5 right-5 text-gray-900 hover:text-gray-700 transition-colors duration-200"
+                className="absolute z-10 top-4 sm:top-5 right-3 sm:right-5 text-gray-900 hover:text-gray-700 transition-colors duration-200"
                 aria-label="GitHub Repository"
             >
                 <FaGithub size={30} />

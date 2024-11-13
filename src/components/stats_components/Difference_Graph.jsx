@@ -1,17 +1,18 @@
 import { color } from 'd3';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 function RatingDiff({ data, isMobile }) {
+  const [isMounted, setisMounted] = useState(false)
   // Process the data to create histogram bins
   const rating_diff_data = data.rating_diff;
   const minValue = Math.min(...rating_diff_data);
   const maxValue = Math.max(...rating_diff_data);
-  
+
   // Create histogram bins
   const binCount = 10;
   const binWidth = (maxValue - minValue) / binCount;
-  
+
   // Create bins and count frequencies
   const bins = Array(binCount).fill(0);
   rating_diff_data.forEach(value => {
@@ -34,34 +35,34 @@ function RatingDiff({ data, isMobile }) {
 
   const options = {
     chart: {
-        type: 'bar',
-        toolbar: { show: false },
-        // height: 300,
+      type: 'bar',
+      toolbar: { show: false },
+      // height: 300,
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 1,
+        horizontal: false,
+        columnWidth: '100%',
       },
-      plotOptions: {
-        bar: {
-          borderRadius: 1,
-          horizontal: false,
-          columnWidth: '100%',
-        },
-      },
-      grid: {
-        show: false, 
-      },
+    },
+    grid: {
+      show: false,
+    },
     title: {
       text: 'User rating vs Total rating',
       align: 'center',
       style: {
-        fontFamily: 'Oswald, sans-serif',  
-        fontSize: '16px', 
-        fontWeight: 'light', 
+        fontFamily: 'Oswald, sans-serif',
+        fontSize: '16px',
+        fontWeight: 'light',
         color: 'white',
       }
     },
     xaxis: {
       categories: binLabels,
       labels: {
-        style: { 
+        style: {
           fontSize: '12px',
           colors: '#FFFFFF'
         },
@@ -76,10 +77,10 @@ function RatingDiff({ data, isMobile }) {
       title: {
         text: 'Rating Difference',
         style: {
-            fontFamily: 'Oswald, sans-serif',  
-            fontSize: '12px', 
-            fontWeight: 'light', 
-            color: 'white',
+          fontFamily: 'Oswald, sans-serif',
+          fontSize: '12px',
+          fontWeight: 'light',
+          color: 'white',
         }
       }
     },
@@ -93,10 +94,10 @@ function RatingDiff({ data, isMobile }) {
       title: {
         text: 'Frequency',
         style: {
-            fontFamily: 'Oswald, sans-serif',  
-            fontSize: '12px', 
-            fontWeight: 'light', 
-            color: 'white',
+          fontFamily: 'Oswald, sans-serif',
+          fontSize: '12px',
+          fontWeight: 'light',
+          color: 'white',
         }
       }
     },
@@ -109,15 +110,22 @@ function RatingDiff({ data, isMobile }) {
 
   };
 
+  useEffect(() => {
+    setisMounted(true);
+  }, []);
+
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <ReactApexChart
-        options={options}
-        series={series}
-        type="bar"
-        // width={600}
-        height={(isMobile ? 250 : 400)}
-      />
+      {isMounted && (
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="bar"
+          // width={600}
+          height={(isMobile ? 250 : 400)}
+        />
+      )}
+
     </div>
   );
 }
