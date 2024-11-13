@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 const achievements_to_svg = {
   'Traveller 1': { 
@@ -135,20 +135,47 @@ const achievements_to_svg = {
 
 function Achievements({ achievements }) {
   const [tooltip, setTooltip] = useState({ visible: false, content: '', x: 0, y: 0 });
+  const TOOLTIP_WIDTH = 300
 
-  const handleMouseEnter = (event, text) => {
+  const calculateTooltipPosition = useCallback((event) => {
     const { pageX, pageY } = event;
+    
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    const tooltipHeight = 40;
+
+    let x = pageX + 10;
+    let y = pageY + 10;
+
+    if (x + TOOLTIP_WIDTH > viewportWidth) {
+      x = pageX - TOOLTIP_WIDTH - 10;
+    }
+
+    if (y + tooltipHeight > viewportHeight) {
+      y = pageY - tooltipHeight - 10;
+    }
+
+    if (x < 0) x = 10;
+
+    if (y < 0) y = 10;
+
+    return { x, y };
+  }, []);
+
+ const handleMouseEnter = useCallback((event, text) => {
+    const position = calculateTooltipPosition(event);
     setTooltip({
       visible: true,
       content: text,
-      x: pageX + 10,
-      y: pageY + 10
+      x: position.x,
+      y: position.y
     });
-  };
+  }, [calculateTooltipPosition]);
 
-  const handleMouseLeave = () => {
-    setTooltip({ ...tooltip, visible: false });
-  };
+  const handleMouseLeave = useCallback(() => {
+    setTooltip(prev => ({ ...prev, visible: false }));
+  }, []);
 
   return (
     <>
