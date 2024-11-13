@@ -24,7 +24,9 @@ export const fetchStatsData = createAsyncThunk('data/fetchStatsData', async ({ u
     } catch (error) {
         if (error.response?.data?.detail == "Stat_404") {
             throw new Error("User doesn't exist")
-        } else {
+        } else if (error.response?.data?.detail == "Stat_400") {
+            throw new Error('You must watch atleast 20 movies')
+        }else  {
             throw new Error('Failed to fetch data')
         }
         

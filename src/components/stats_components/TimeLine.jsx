@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Chrono } from 'react-chrono';
 import { Info } from 'lucide-react';
 
-const Timeline = ({ monthlySummary, username }) => {
+const Timeline = ({ monthlySummary }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [sortedSummary, setSortedSummary] = useState([]);
 
@@ -11,11 +11,7 @@ const Timeline = ({ monthlySummary, username }) => {
       const sorted = [...monthlySummary].sort((a, b) => new Date(a.time) - new Date(b.time));
       setSortedSummary(sorted);
     }
-  }, [username, monthlySummary]);
-
-  // useEffect(() => {
-  //   console.log("Sorted Summary:", sortedSummary);
-  // }, [sortedSummary]);
+  }, [monthlySummary]);
 
   const items = sortedSummary.map((entry) => {
     const {

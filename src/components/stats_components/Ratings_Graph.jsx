@@ -88,7 +88,6 @@ function RatingsGraph({ data, isMobile }) {
     ];
 
     useEffect(() => {
-        // Set isMounted to true once the component has fully mounted
         setIsMounted(true);
     }, []);
 
