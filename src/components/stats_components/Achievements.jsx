@@ -135,7 +135,7 @@ const achievements_to_svg = {
 
 function Achievements({ achievements }) {
   const [tooltip, setTooltip] = useState({ visible: false, content: '', x: 0, y: 0 });
-  const TOOLTIP_WIDTH = 300
+  const TOOLTIP_WIDTH = 250
 
   const calculateTooltipPosition = useCallback((event) => {
     const { pageX, pageY } = event;
@@ -210,17 +210,18 @@ function Achievements({ achievements }) {
         </div>
       </div>
 
-      {tooltip.visible && (
+ {tooltip.visible && (
         <div
-          className='text-white mt-2 px-4 py-2 text-sm bg-gray-800 rounded-lg shadow-lg whitespace-nowrap'
+          className='fixed text-white mt-2 px-4 py-2 text-sm bg-gray-800 rounded-lg shadow-lg pointer-events-none'
           style={{
             position: 'absolute',
             top: `${tooltip.y}px`,
             left: `${tooltip.x}px`,
-            zIndex: 1000
+            zIndex: 1000,
+            width: `${TOOLTIP_WIDTH}px`,
           }}
         >
-          {tooltip.content}
+          <p className='break-words'>{tooltip.content}</p>
         </div>
       )}
     </>
