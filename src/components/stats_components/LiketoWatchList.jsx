@@ -21,7 +21,7 @@ function LiketoWatchList({ movies, order }) {
             : [...moviesArray].sort((a, b) => a.watchedToLikeRatio - b.watchedToLikeRatio)
 
         setmovieData(sortedMovies)
-    }, [])
+    }, [movies])
 
     const displayMovies = showAll ? movieData : movieData.slice(0, 2)
 

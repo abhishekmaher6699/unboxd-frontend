@@ -108,11 +108,13 @@ function Stats() {
   }
 
   if (stats_loading && isLoadingFromRedux) {
+    if(data) {
+      setdata(null)}
     return <StatsLoading />;
   }
 
   return (
-    <div className='w-full relative flex flex-col z-10 items-center justify-center mb-0 md:mb-0'>
+    <div className='w-full relative flex flex-col z-10 items-center justify-center mb-5 md:mb-0'>
       <a
         href="https://github.com/abhishekmaher6699"
         target="_blank"

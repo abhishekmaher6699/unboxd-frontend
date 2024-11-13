@@ -18,6 +18,15 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
     height: window.innerHeight
   });
 
+  const countryMovieCounts = useMemo(() => {
+    return data.flatMap(movie => movie.countries)
+      .reduce((acc, country) => {
+        const code = COUNTRYCODES[country];
+        acc[code] = (acc[code] || 0) + 1;
+        return acc;
+      }, {});
+  }, [data]);
+
   useEffect(() => {
     const handleResize = () => {
       setWindowDimensions({
@@ -153,13 +162,6 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
 
     mapGroup.selectAll("path").remove();
 
-    const countryMovieCounts = data.flatMap(movie => movie.countries)
-      .reduce((acc, country) => {
-        const code = COUNTRYCODES[country];
-        acc[code] = (acc[code] || 0) + 1;
-        return acc;
-      }, {});
-
     const movieCounts = Object.values(countryMovieCounts);
     const minCount = d3.min(movieCounts) || 0;
     const maxCount = d3.max(movieCounts) || 0;
@@ -243,11 +245,11 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
         event.stopPropagation()
         onCountrySelect(d.properties.name);
       });
-  }, [data, onCountrySelect, windowDimensions]);
+  }, [countryMovieCounts, onCountrySelect, windowDimensions]);
 
   useEffect(() => {
     updateMap();
-  }, [updateMap]);
+  }, [data, updateMap]);
 
   useEffect(() => {
     document.body.style.overflow = isFullscreen ? 'hidden' : '';

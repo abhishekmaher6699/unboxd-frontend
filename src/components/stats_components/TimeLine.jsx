@@ -1,11 +1,21 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Chrono } from 'react-chrono';
 import { Info } from 'lucide-react';
 
-const Timeline = ({ monthlySummary }) => {
+const Timeline = ({ monthlySummary, username }) => {
   const [showTooltip, setShowTooltip] = useState(false);
-  const sortedSummary = [...monthlySummary].sort((a, b) => new Date(a.time) - new Date(b.time));
+  const [sortedSummary, setSortedSummary] = useState([]);
 
+  useEffect(() => {
+    if (monthlySummary && monthlySummary.length > 0) {
+      const sorted = [...monthlySummary].sort((a, b) => new Date(a.time) - new Date(b.time));
+      setSortedSummary(sorted);
+    }
+  }, [username, monthlySummary]);
+
+  // useEffect(() => {
+  //   console.log("Sorted Summary:", sortedSummary);
+  // }, [sortedSummary]);
 
   const items = sortedSummary.map((entry) => {
     const {
@@ -20,58 +30,57 @@ const Timeline = ({ monthlySummary }) => {
     } = entry.data;
 
     const cardDetailedText = `
-    <ul>
-      ${Object.keys(most_watched_genre).length ? `
-        <li><b>Most Watched Genre</b>: 
-          ${Object.entries(most_watched_genre)
-            .map(([genre, count]) => `${genre} (${count})`)
-            .join(', ')}
-        </li>` : ''}
+      <ul>
+        ${Object.keys(most_watched_genre).length ? `
+          <li><b>Most Watched Genre</b>: 
+            ${Object.entries(most_watched_genre)
+              .map(([genre, count]) => `${genre} (${count})`)
+              .join(', ')}
+          </li>` : ''}
         
-      ${Object.keys(most_watched_country).length ? `
-        <li><b>Most Watched Country</b>: 
-          ${Object.entries(most_watched_country)
-            .map(([country, count]) => `${country} (${count})`)
-            .join(', ')}
-        </li>` : ''}
+        ${Object.keys(most_watched_country).length ? `
+          <li><b>Most Watched Country</b>: 
+            ${Object.entries(most_watched_country)
+              .map(([country, count]) => `${country} (${count})`)
+              .join(', ')}
+          </li>` : ''}
         
-      ${Object.keys(most_watched_director).length ? `
-        <li><b>Most Watched Director</b>: 
-          ${Object.entries(most_watched_director)
-            .map(([director, count]) => `${director} (${count})`)
-            .join(', ')}
-        </li>` : ''}
+        ${Object.keys(most_watched_director).length ? `
+          <li><b>Most Watched Director</b>: 
+            ${Object.entries(most_watched_director)
+              .map(([director, count]) => `${director} (${count})`)
+              .join(', ')}
+          </li>` : ''}
         
-      ${Object.keys(most_watched_year).length ? `
-        <li><b>Most Watched Year</b>: 
-          ${Object.entries(most_watched_year)
-            .map(([year, count]) => `${year} (${count})`)
-            .join(', ')}
-        </li>` : ''}
+        ${Object.keys(most_watched_year).length ? `
+          <li><b>Most Watched Year</b>: 
+            ${Object.entries(most_watched_year)
+              .map(([year, count]) => `${year} (${count})`)
+              .join(', ')}
+          </li>` : ''}
         
-      ${Object.keys(most_watched_theme).length ? `
-        <li><b>Most Watched Theme</b>: 
-          ${Object.entries(most_watched_theme)
-            .map(([theme, count]) => `${theme} (${count})`)
-            .join(', ')}
-        </li>` : ''}
+        ${Object.keys(most_watched_theme).length ? `
+          <li><b>Most Watched Theme</b>: 
+            ${Object.entries(most_watched_theme)
+              .map(([theme, count]) => `${theme} (${count})`)
+              .join(', ')}
+          </li>` : ''}
         
-      ${Object.keys(most_watched_language).length ? `
-        <li><b>Most Watched Language</b>: 
-          ${Object.entries(most_watched_language)
-            .map(([lang, count]) => `${lang} (${count})`)
-            .join(', ')}
-        </li>` : ''}
+        ${Object.keys(most_watched_language).length ? `
+          <li><b>Most Watched Language</b>: 
+            ${Object.entries(most_watched_language)
+              .map(([lang, count]) => `${lang} (${count})`)
+              .join(', ')}
+          </li>` : ''}
         
-      ${Object.keys(most_watched_actor).length ? `
-        <li><b>Most Watched Actor</b>: 
-          ${Object.entries(most_watched_actor)
-            .map(([actor, count]) => `${actor} (${count})`)
-            .join(', ')}
-        </li>` : ''}
-    </ul>
-  `.trim();
-  
+        ${Object.keys(most_watched_actor).length ? `
+          <li><b>Most Watched Actor</b>: 
+            ${Object.entries(most_watched_actor)
+              .map(([actor, count]) => `${actor} (${count})`)
+              .join(', ')}
+          </li>` : ''}
+      </ul>
+    `.trim();
 
     return {
       title: entry.time,
@@ -80,6 +89,11 @@ const Timeline = ({ monthlySummary }) => {
       cardDetailedText: cardDetailedText,
     };
   });
+
+  // If sortedSummary is empty, show a fallback message
+  if (sortedSummary.length === 0) {
+    return <div className="text-center text-gray-500">No data available</div>;
+  }
 
   return (
     <div className='w-full flex flex-col gap-5 p-5 mt-5 bg-gray-50 bg-opacity-50 rounded-lg shadow-lg p-6'>
@@ -105,16 +119,16 @@ const Timeline = ({ monthlySummary }) => {
       </div>
 
       <Chrono items={items} mode="HORIZONTAL" 
-      fontSizes={{
-        cardSubtitle: '0.75rem',
-        cardText: '0.5rem',
-        cardTitle: '0.8rem',
-        title: '0.8rem',
-      }}
-      theme={{ primary: 'red', secondary: 'lightgray' }} 
-      parseDetailsAsHTML 
-      readMore={false} 
-      enableOutline />
+        fontSizes={{
+          cardSubtitle: '0.75rem',
+          cardText: '0.5rem',
+          cardTitle: '0.8rem',
+          title: '0.8rem',
+        }}
+        theme={{ primary: 'red', secondary: 'lightgray' }} 
+        parseDetailsAsHTML 
+        readMore={false} 
+        enableOutline />
     </div>
   );
 };
