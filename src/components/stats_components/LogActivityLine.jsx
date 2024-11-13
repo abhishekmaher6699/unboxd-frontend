@@ -42,7 +42,7 @@ function LogActivityLineChart({ log_activity }) {
     }, []);
 
     return (
-        <div className=' w-[90%] md:w-[80%] lg:w-[50%] h-56 md:h-96 bg-slate-500 bg-opacity-50 pt-4 md:py-10  pr-5 flex flex-col gap-0 md:gap-2'>
+        <div className=' w-full md:w-[80%] lg:w-[50%] h-56 md:h-96 bg-slate-500 bg-opacity-50 pt-4 md:py-10  pr-5 flex flex-col gap-0 md:gap-2'>
             <p className='font-oswald text-center text-white'>Log Activity</p>
 
             <ResponsiveContainer width="100%" height="100%">

@@ -30,7 +30,7 @@ function Rating({ data }) {
     const diff_ratio = calculateMean(data.processed_data.rating_diff).toFixed(2)
 
     return (
-        <div className='w-[90%] lg:w-[50%]'>
+        <div className='w-full md:w-[80%] lg:w-[50%]'>
             <div className='flex gap-5 flex-col justify-between items-center'>
                 <div className={`w-full`}>
                     <Ratings_Graph data={data.og_data} isMobile = {isMobile}/>

@@ -153,7 +153,7 @@ function Achievements({ achievements }) {
 
   return (
     <>
-      <div className='bg-slate-600 bg-opacity-30 px-5 md:px-8 pt-5 pb-5 w-[90%] lg:w-[50%] rounded-md flex flex-col gap-4 md:gap-5'>
+      <div className='bg-slate-600 bg-opacity-30 px-5 md:px-8 pt-5 pb-5 w-full md:w-[80%] lg:w-[50%] rounded-md flex flex-col gap-4 md:gap-5'>
         <h2 className='text-white font-oswald text-lg text-xl'>Achievements</h2>
 
         <div className='flex gap-5 overflow-x-auto scrollbar-thin scrollbar-none relative'>

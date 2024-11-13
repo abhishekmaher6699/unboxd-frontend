@@ -161,7 +161,7 @@ function Stats() {
               <h1 className='font-oswald text-xl sm:text-2xl text-white'>{data.processed_data.basic_info.profile_name}</h1>
             </div>
 
-            <div className='w-[90%] md:w-[80%] lg:w-[50%]'>
+            <div className='w-full md:w-[80%] lg:w-[50%]'>
               <ul className='flex gap-0 flex-wrap'>
                 <li className='text-center bg-slate-600 bg-opacity-30 px-3 py-1 flex-1 border-r rounded-l-lg'>
                   <p className='font-oswald md:text-xl text-gray-800 mb-1 md:mb-2 md:h-12 lg:h-8'>Total movies</p>
@@ -182,7 +182,7 @@ function Stats() {
               </ul>
             </div>
 
-            <div className='w-[90%] md:w-[80%] lg:w-[50%]'>
+            <div className='w-full md:w-[80%] lg:w-[50%]'>
               <ul className='flex lg:flex-wrap flex-col md:flex-row'>
                 <li className='text-center bg-slate-600 bg-opacity-30 px-3 md:y-2 sm:py-1 flex-1 md:border-r md:rounded-l-lg rounded-t-lg  md:rounded-tr-none'>
                   <p className='font-oswald  md:text-xl text-gray-900 mb-1 md:mb-2 md:h-12 lg:h-8'>Movies from LB top 250</p>
@@ -206,7 +206,7 @@ function Stats() {
 
           </div>
           {/* Aggregations */}
-          <div className='lg:w-[50%] md:w-[80%] w-[80%] mt-5
+          <div className='lg:w-[50%] md:w-[80%] w-[90%] mt-5
           '>
             {/* Watch to likr ratios */}
             <div className='flex md:flex-row justify-between flex-col w-full mb-5 gap-2'>
