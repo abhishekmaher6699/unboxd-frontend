@@ -11,7 +11,25 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
   const mapRef = useRef(null);
   const tooltipRef = useRef(null);
   const geoDataRef = useRef(null);
+  const containerRef = useRef(null)
   
+  const [windowDimensions, setWindowDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleDownload = useCallback(() => {
     if (!svgRef.current) return;
     const svgElement = svgRef.current;
@@ -36,6 +54,15 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
     URL.revokeObjectURL(url);
   }, []);
 
+  const hideTooltip = useCallback(() => {
+    if (tooltipRef.current) {
+      tooltipRef.current
+        .style("opacity", 0)
+        .style("visibility", "hidden")
+        .style("display", "none");
+    }
+  }, []);
+
   useEffect(() => {
     const initializeMap = async () => {
       if (mapRef.current) return;
@@ -53,7 +80,7 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
       const tooltip = d3.select("body")
         .append("div")
         .attr("class", "rating_tooltip")
-        .style("position", "absolute")
+        .style("position", "fixed")
         .style("visibility", "hidden")
         .style("display", "none")
         .style("background", "#fff")
@@ -61,6 +88,12 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
         .style("border-radius", "4px")
         .style("padding", "5px")
         .style("pointer-events", "none");
+
+      svg.on("click", (event) => {
+          if (event.target === svgRef.current) {
+            hideTooltip();
+          }
+        });
 
       const projection = d3.geoNaturalEarth1()
         .scale(160)
@@ -90,7 +123,17 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
 
     initializeMap();
 
+    const handleDocumentClick = (event) => {
+      if (!svgRef.current?.contains(event.target)) {
+        hideTooltip();
+      }
+    };
+
+    document.addEventListener('click', handleDocumentClick);
+
+
     return () => {
+      document.removeEventListener('click', handleDocumentClick);
       if (tooltipRef.current) {
         tooltipRef.current.remove();
       }
@@ -126,6 +169,27 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
       .domain([minCount, ...thresholds, maxCount])
       .range(d3.schemeBlues[7]);
 
+    const handleTooltipPosition = (event) => {
+        const containerRect = containerRef.current.getBoundingClientRect();
+        const tooltipWidth = 150; 
+        const tooltipHeight = 80;
+        
+        let left = event.clientX + 10;
+        let top = event.clientY - 10;
+  
+        if (left + tooltipWidth > windowDimensions.width) {
+          left = event.clientX - tooltipWidth - 10;
+        }
+  
+        if (top + tooltipHeight > windowDimensions.height) {
+          top = event.clientY - tooltipHeight - 10;
+        }
+        if (left < 0) left = 10;  
+        if (top < 0) top = 10;
+  
+        return { left, top };
+      };
+
     mapGroup.selectAll("path")
       .data(geoDataRef.current.features)
       .enter()
@@ -142,6 +206,8 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
         const countryId = d.id;
         const movieCount = countryMovieCounts[countryId];
         d3.select(this).attr("stroke-width", 1.5);
+
+        const { left, top } = handleTooltipPosition(event);
         
         tooltip
           .style("visibility", "visible")
@@ -154,26 +220,30 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
             </div>
             Number of Movies: ${movieCount || 0}
           `)
-          .style("left", (event.pageX + 10) + "px")
-          .style("top", (event.pageY - 10) + "px");
+          .style("left", `${left}px`)
+          .style("top", `${top}px`);
 
         const container = document.getElementById('flag-container');
         const root = createRoot(container);
         root.render(<Flag code={d.id} width={32} />);
       })
       .on("mousemove", function(event) {
+        const { left, top } = handleTooltipPosition(event);
         tooltip
-          .style("left", (event.pageX + 10) + "px")
-          .style("top", (event.pageY - 10) + "px");
+          .style("left", `${left}px`)
+          .style("top", `${top}px`);
       })
-      .on("mouseout", function() {
+      .on("mouseout touchend", function() {
         d3.select(this).attr("stroke-width", 0.5);
         tooltip.style("opacity", 0);
+        tooltip.style("opacity", 0).style("visibility", "hidden");
       })
       .on("click", function(event, d) {
+        event.preventDefault();
+        event.stopPropagation()
         onCountrySelect(d.properties.name);
       });
-  }, [data, onCountrySelect]);
+  }, [data, onCountrySelect, windowDimensions]);
 
   useEffect(() => {
     updateMap();
@@ -188,6 +258,7 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
 
   return (
     <div
+    ref={containerRef}
       className={`bg-gray-50 bg-opacity-50 rounded-lg shadow-lg relative p-3 md:p-6 ${isFullscreen ? 'h-full flex flex-col items-center lg:justify-center' : ''}`}
     >
       <div className='flex w-full items-center justify-between'>
