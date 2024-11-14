@@ -30,7 +30,6 @@ function RatingDiff({ data, isMobile }) {
   const series = [{
     name: 'Frequency',
     data: bins,
-    color: '#0FFF50'
   }];
 
   const options = {
@@ -56,7 +55,7 @@ function RatingDiff({ data, isMobile }) {
         fontFamily: 'Oswald, sans-serif',
         fontSize: '16px',
         fontWeight: 'light',
-        color: 'white',
+        color: '#374151',
       }
     },
     xaxis: {
@@ -64,15 +63,9 @@ function RatingDiff({ data, isMobile }) {
       labels: {
         style: {
           fontSize: '12px',
-          colors: '#FFFFFF'
+          colors: '#374151'
         },
         rotate: 0
-      },
-      axisBorder: {
-        color: '#FFFFFF'
-      },
-      axisTicks: {
-        color: '#FFFFFF'
       },
       title: {
         text: 'Rating Difference',
@@ -80,14 +73,14 @@ function RatingDiff({ data, isMobile }) {
           fontFamily: 'Oswald, sans-serif',
           fontSize: '12px',
           fontWeight: 'light',
-          color: 'white',
+          color: '#374151',
         }
       }
     },
     yaxis: {
       labels: {
         style: {
-          colors: '#FFFFFF',
+          colors: '#374151',
           fontSize: '14px'
         }
       },
@@ -97,7 +90,7 @@ function RatingDiff({ data, isMobile }) {
           fontFamily: 'Oswald, sans-serif',
           fontSize: '12px',
           fontWeight: 'light',
-          color: 'white',
+          color: '#374151',
         }
       }
     },

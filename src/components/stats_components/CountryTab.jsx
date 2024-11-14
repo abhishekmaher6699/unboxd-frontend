@@ -18,8 +18,8 @@ const CountryTab = ({ countries }) => {
     };
 
     return (
-        <div className='bg-slate-600 bg-opacity-30 px-5 md:px-10 pt-5 pb-4 w-full md:w-[80%] lg:w-[50%] rounded-md flex flex-col gap-5'>
-            <p className='text-white font-oswald text-lg'>Countries Explored: {countries.length}</p>
+        <div className='bg-gray-50 bg-opacity-50 shadow-lg px-5 md:px-10 pt-5 pb-4 w-[90%] md:w-[80%] lg:w-[50%] rounded-md flex flex-col gap-5'>
+            <p className='text-gray-700 font-oswald text-lg'>Countries Explored: {countries.length}</p>
             <div className="grid grid-cols-4 md:grid-cols-10 gap-3 md:gap-4">
                 {countries.slice(0, isExpanded ? countries.length : (isMobile ? 8 : 10)).map((country) => {
                     const countryCode = COUNTRYCODES[country] || null;
@@ -38,7 +38,7 @@ const CountryTab = ({ countries }) => {
 
             <button 
                 onClick={toggleExpansion} 
-                className='flex items-center justify-center text-white cursor-pointer'>
+                className='flex items-center justify-center text-gray-700 cursor-pointer'>
                 <span>{isExpanded ? '▲' : '▼'}</span>
                 <span className=' text-sm ml-2'>{isExpanded ? 'Show Less' : 'Show More'}</span>
             </button>

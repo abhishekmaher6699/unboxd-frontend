@@ -22,22 +22,15 @@ function RatingsGraph({ data, isMobile }) {
             background: 'transparent',
         },
         grid: { show: false },
-        colors: ['#FF0000', '#0FFF50'],
+        colors: ['#f92306', '#22c55e'],
         plotOptions: {
             bar: {
                 horizontal: false,
                 columnWidth: '80%',
-                dataLabels: {
-                    enabled: true,
-                    style: {
-                        fontSize: '12px',
-                        fontFamily: 'Arial, sans-serif',
-                        fontWeight: 'normal',
-                        colors: ['white'],
-                    },
-                    formatter: (val) => val,
-                },
             },
+        },
+        dataLabels: {
+            enabled: false,
         },
         xaxis: {
             categories: ratingBins,
@@ -47,10 +40,10 @@ function RatingsGraph({ data, isMobile }) {
                     fontFamily: 'Oswald, sans-serif',
                     fontSize: '12px',
                     fontWeight: 'light',
-                    color: 'white',
+                    color: '#374151',
                 },
             },
-            labels: { style: { colors: 'white' } },
+            labels: { style: { colors: '#374151' } },
         },
         yaxis: {
             title: {
@@ -59,10 +52,10 @@ function RatingsGraph({ data, isMobile }) {
                     fontFamily: 'Oswald, sans-serif',
                     fontSize: '12px',
                     fontWeight: 'light',
-                    color: 'white',
+                    color: '#374151',
                 },
             },
-            labels: { style: { colors: 'white' } },
+            labels: { style: { colors: '#374151' } },
         },
         tooltip: {
             enabled: true,
@@ -77,7 +70,7 @@ function RatingsGraph({ data, isMobile }) {
                 fontFamily: 'Oswald, sans-serif',
                 fontSize: '16px',
                 fontWeight: 'light',
-                color: 'white',
+                color: '#374151',
             },
         },
     };

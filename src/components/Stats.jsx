@@ -17,7 +17,7 @@ import UserType from './stats_components/UserType';
 import Screenshots from './stats_components/Screenshots';
 import StatsLoading from './stats_components/StatsLoading';
 import StatsError from './stats_components/Error';
-import { FaGithub } from 'react-icons/fa'; 
+import { FaGithub } from 'react-icons/fa';
 import MapSection from './stats_components/MapSection';
 import { TWO_DAYS_MS } from '../utils/objects';
 import { fetchStatsData } from '../redux/unboxd_redux';
@@ -35,7 +35,7 @@ function Stats() {
 
   const handleUpdate = (event) => {
     event.preventDefault();
-    if (currentUsername){
+    if (currentUsername) {
       dispatch(fetchStatsData({ username: currentUsername, forceRefresh: true }))
       setShowRefresh(false)
     }
@@ -66,7 +66,7 @@ function Stats() {
       username = storedUsername;
     }
 
-    setCurrentUsername(username); 
+    setCurrentUsername(username);
 
     if (stats) {
       setdata(stats)
@@ -97,19 +97,20 @@ function Stats() {
     }
   }, [stats_username, stats, stats_loading, location.state]);
 
-  if (!data && currentUsername  && !location.state?.username && !isLoadingFromRedux) {
+  if (!data && currentUsername && !location.state?.username && !isLoadingFromRedux) {
     localStorage.removeItem("current_stats_username")
-    return <StatsError error={stats_error}/>
+    return <StatsError error={stats_error} />
   }
 
   if (stats_error) {
     localStorage.removeItem("current_stats_username")
-    return <StatsError error={stats_error}/>;
+    return <StatsError error={stats_error} />;
   }
 
   if (stats_loading && isLoadingFromRedux) {
-    if(data) {
-      setdata(null)}
+    if (data) {
+      setdata(null)
+    }
     return <StatsLoading />;
   }
 
@@ -141,64 +142,69 @@ function Stats() {
                 You can update it if you have made any changes in you LB profile.
               </p>
               <div className='flex flex-row gap-5 justify-center'>
-              <button
-                className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200"
-                onClick={handleUpdate}
-              >
-                Update
-              </button>
-              <button className='mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200'
-              onClick={() => {setShowRefresh(false)}}>
-                Close
-              </button>
+                <button
+                  className="mt-2 px-4 py-2 bg-red-500 text-slate-500 rounded-md hover:bg-red-600 transition-colors duration-200"
+                  onClick={handleUpdate}
+                >
+                  Update
+                </button>
+                <button className='mt-2 px-4 py-2 bg-blue-500 text-slate-500 rounded-md hover:bg-blue-600 transition-colors duration-200'
+                  onClick={() => { setShowRefresh(false) }}>
+                  Close
+                </button>
               </div>
 
             </div>
           )}
-          <div className='w-full bg-gray-600 p-10 flex flex-col items-center gap-5 bg-opacity-50'>
-            <div className='flex flex-col items-center gap-4'>
-              <div className='rounded-full w-20 h-20 md:w-24 md:h-24 overflow-hidden shadow-xl'>
-                <img src={data.processed_data.basic_info.profile_pic} alt="" className='w-full h-full object-cover' />
+
+          <div className='w-full flex flex-col items-center gap-5 mt-5'>
+
+            {/* summary */}
+            <div className='w-[90%] md:w-[80%] p-5 pt-10 lg:w-[50%] bg-gray-50 bg-opacity-50 rounded-lg shadow-lg flex flex-col items-center gap-5'>
+              <div className='flex flex-col items-center gap-4'>
+                <div className='rounded-full w-20 h-20 md:w-24 md:h-24 overflow-hidden shadow-2xl'>
+                  <img src={data.processed_data.basic_info.profile_pic} alt="" className='w-full h-full object-cover' />
+                </div>
+                <h1 className='font-oswald text-xl sm:text-2xl  text-gray-700'>{data.processed_data.basic_info.profile_name}</h1>
               </div>
-              <h1 className='font-oswald text-xl sm:text-2xl text-white'>{data.processed_data.basic_info.profile_name}</h1>
-            </div>
 
-            <div className='w-full md:w-[80%] lg:w-[50%]'>
-              <ul className='flex gap-0 flex-wrap'>
-                <li className='text-center bg-slate-600 bg-opacity-30 px-3 py-1 flex-1 border-r rounded-l-lg'>
-                  <p className='font-oswald md:text-xl text-gray-800 mb-1 md:mb-2 md:h-12 lg:h-8'>Total movies</p>
-                  <p className='font-number text-2xl md:text-3xl font-semibold text-white'>{data.processed_data.basic_info.movie_count}</p>
-                </li>
-                <li className='text-center bg-slate-600 bg-opacity-30 px-3 py-1 flex-1 border-r'>
-                  <p className='font-oswald md:text-xl text-gray-800 mb-1 md:mb-2 md:h-12 lg:h-8'>Liked movies</p>
-                  <p className='font-number text-2xl md:text-3xl font-semibold text-white'>{data.processed_data.basic_info.liked_movie_count}</p>
-                </li>
-                <li className='text-center bg-slate-600 bg-opacity-30 px-3 py-1 flex-1 border-r'>
-                  <p className='font-oswald md:text-xl text-gray-800  mb-1 md:mb-2 md:h-12 lg:h-8 '>Rated movies</p>
-                  <p className='font-number text-2xl md:text-3xl font-semibold text-white'>{data.processed_data.basic_info.rated_movie_count}</p>
-                </li>
-                <li className='text-center bg-slate-600 bg-opacity-30 px-3 py-1 flex-1 rounded-r-lg'>
-                  <p className='font-oswald md:text-xl  text-gray-800  mb-1 md:mb-2 md:h-12 lg:h-8 '>Reviewed movies</p>
-                  <p className='font-number text-2xl md:text-3xl font-semibold text-white'>{data.processed_data.basic_info.reviewed_movie_count}</p>
-                </li>
-              </ul>
-            </div>
+              <div className='w-full'>
+                <ul className='flex gap-0 flex-wrap'>
+                  <li className='text-center bg-gray-50 bg-opacity-30 px-3 py-1 flex-1 border-r border-red-600 rounded-l-lg'>
+                    <p className='font-oswald md:text-xl text-gray-800 mb-1 md:mb-2 md:h-12 lg:h-8'>Total movies</p>
+                    <p className='font-number text-2xl md:text-3xl font-semibold text-slate-500'>{data.processed_data.basic_info.movie_count}</p>
+                  </li>
+                  <li className='text-center bg-gray-50 bg-opacity-30 px-3 py-1 flex-1 border-r border-red-600'>
+                    <p className='font-oswald md:text-xl text-gray-800 mb-1 md:mb-2 md:h-12 lg:h-8'>Liked movies</p>
+                    <p className='font-number text-2xl md:text-3xl font-semibold text-slate-500'>{data.processed_data.basic_info.liked_movie_count}</p>
+                  </li>
+                  <li className='text-center bg-gray-50 bg-opacity-30 px-3 py-1 flex-1 border-r border-red-600'>
+                    <p className='font-oswald md:text-xl text-gray-800  mb-1 md:mb-2 md:h-12 lg:h-8 '>Rated movies</p>
+                    <p className='font-number text-2xl md:text-3xl font-semibold text-slate-500'>{data.processed_data.basic_info.rated_movie_count}</p>
+                  </li>
+                  <li className='text-center bg-gray-50 bg-opacity-30 px-3 py-1 flex-1 rounded-r-lg'>
+                    <p className='font-oswald md:text-xl  text-gray-800  mb-1 md:mb-2 md:h-12 lg:h-8 '>Reviewed movies</p>
+                    <p className='font-number text-2xl md:text-3xl font-semibold text-slate-500'>{data.processed_data.basic_info.reviewed_movie_count}</p>
+                  </li>
+                </ul>
+              </div>
 
-            <div className='w-full md:w-[80%] lg:w-[50%]'>
-              <ul className='flex lg:flex-wrap flex-col md:flex-row'>
-                <li className='text-center bg-slate-600 bg-opacity-30 px-3 md:y-2 sm:py-1 flex-1 md:border-r md:rounded-l-lg rounded-t-lg  md:rounded-tr-none'>
-                  <p className='font-oswald  md:text-xl text-gray-900 mb-1 md:mb-2 md:h-12 lg:h-8'>Movies from LB top 250</p>
-                  <p className='font-number text-2xl md:text-3xl font-bold text-white'>{data.processed_data.basic_info.top250_movie_count}</p>
-                </li>
-                <li className='text-center bg-slate-600 bg-opacity-30 px-3 md:y-2 sm:py-1  flex-1 md:border-r'>
-                  <p className='font-oswald  md:text-xl  text-gray-900 mb-1 md:mb-2 md:h-12 lg:h-8'>No. of languages explored</p>
-                  <p className='font-number text-2xl md:text-3xl font-semibold text-white'>{data.processed_data.basic_info.language_count}</p>
-                </li>
-                <li className='text-center bg-slate-600 bg-opacity-30 px-3 pb- md:pb-0 md:py-2 sm:py-1  flex-1 md:rounded-r-lg rounded-b-lg md:rounded-bl-none'>
-                  <p className='font-oswald  md:text-xl  text-gray-900 mb-1 md:mb-2 md:h-12 lg:h-8'>No. of themes explored</p>
-                  <p className='font-number text-2xl md:text-3xl font-semibold text-white'>{data.processed_data.basic_info.themes_count}</p>
-                </li>
-              </ul>
+              <div className='w-full'>
+                <ul className='flex lg:flex-wrap flex-col md:flex-row'>
+                  <li className='text-center bg-gray-50 bg-opacity-30 px-3 md:y-2 sm:py-1 flex-1 md:border-r md:rounded-l-lg rounded-t-lg md:rounded-tr-none border-red-600'>
+                    <p className='font-oswald  md:text-xl text-gray-900 mb-1 md:mb-2 md:h-12 lg:h-8'>Movies from LB top 250</p>
+                    <p className='font-number text-2xl md:text-3xl font-bold text-slate-500'>{data.processed_data.basic_info.top250_movie_count}</p>
+                  </li>
+                  <li className='text-center bg-gray-50  bg-opacity-30 px-3 md:y-2 sm:py-1  flex-1 md:border-r border-red-600'>
+                    <p className='font-oswald  md:text-xl  text-gray-900 mb-1 md:mb-2 md:h-12 lg:h-8'>No. of languages explored</p>
+                    <p className='font-number text-2xl md:text-3xl font-semibold text-slate-500'>{data.processed_data.basic_info.language_count}</p>
+                  </li>
+                  <li className='text-center bg-gray-50 bg-opacity-30 px-3 pb- md:pb-0 md:py-2 sm:py-1  flex-1 md:rounded-r-lg rounded-b-lg md:rounded-bl-none border-red-600'>
+                    <p className='font-oswald  md:text-xl  text-gray-900 mb-1 md:mb-2 md:h-12 lg:h-8'>No. of themes explored</p>
+                    <p className='font-number text-2xl md:text-3xl font-semibold text-slate-500'>{data.processed_data.basic_info.themes_count}</p>
+                  </li>
+                </ul>
+              </div>
             </div>
 
             <Rating data={data} />
@@ -229,7 +235,7 @@ function Stats() {
               <BarGraph data={data.og_data} element={'original_language'} items={10} color={"#dc2626"} title={"Your Top 10 languages"} />
             </div>
             {/* map */}
-            <MapSection  data={data.og_data} />
+            <MapSection data={data.og_data} />
             {/* timeline */}
             <div>
               <Timeline monthlySummary={data.processed_data.monthly_summary} />
