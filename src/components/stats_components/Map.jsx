@@ -63,6 +63,16 @@ const ChoroplethMap = memo(({ data, isFullscreen = false, setIsFullscreen, onCou
     }
   }, []);
 
+   useEffect(() => {
+    const handleScroll = () => {
+      hideTooltip();
+    };
+
+    window.addEventListener('scroll', handleScroll, true); // Using capture phase
+    return () => {
+      window.removeEventListener('scroll', handleScroll, true);
+    };
+  }, [hideTooltip]);
   useEffect(() => {
     const initializeMap = async () => {
       if (mapRef.current) return;
