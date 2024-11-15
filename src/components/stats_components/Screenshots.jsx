@@ -195,7 +195,7 @@ function Screenshots({ data }) {
                                 <div className='-z-10 absolute h-56 w-56 fixed bg-green-600 rounded-full -translate-x-1/3 translate-y-1/3 bottom-0 left-0'></div>
                             </div>
 
-                            <button onClick={() => { downloadImage('card-2') }} className="bg-blue-500 text-white p-2 rounded hover:bg-opacity-80 mx-2 mb-24">
+                            <button onClick={() => { downloadImage('card-2') }} className="bg-blue-500 text-white p-2 rounded hover:bg-opacity-80 mx-2 mb-24 md:mb-0">
                                 Download Card 2
                             </button>
                         </div>
