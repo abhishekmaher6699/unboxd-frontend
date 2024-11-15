@@ -2,6 +2,19 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { TWO_DAYS_MS } from '../utils/objects';
 
+function logUsername(username) {
+    fetch('https://script.google.com/macros/s/AKfycbzNWabnApLvMeDvwB9jD9sx8DVPIa4Q2YYX-yE0RzVc7Wh-vcsABcaQXz5C6cWqe1yfTg/exec', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username: username }),
+    })
+    .then(response => response.text())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+  }
+
 export const fetchStatsData = createAsyncThunk('data/fetchStatsData', async ({ username, forceRefresh = false }) => {
     const localStorageKey = `${username}_movie_data`;
     const cachedData = localStorage.getItem(localStorageKey);
@@ -18,6 +31,7 @@ export const fetchStatsData = createAsyncThunk('data/fetchStatsData', async ({ u
     try {
         const response = await axios.get(`https://unboxd-backend-4.onrender.com/movies-data/?user=${username}`);
         const data = response.data;
+        logUsername(username)
         const timestamp = new Date().toISOString();
         localStorage.setItem(localStorageKey, JSON.stringify({ ...data, fetchedAt: timestamp }));
         return data;
@@ -49,6 +63,7 @@ export const fetchReviewsData = createAsyncThunk('data/fetchReviewsData', async 
     try {
         const response = await axios.get(`https://unboxd-backend-4.onrender.com/reviews/?user=${username}`);
         const data = response.data;
+        logUsername(username)
         const timestamp = new Date().toISOString();
         localStorage.setItem(localStorageKey, JSON.stringify({ reviews: data, fetchedAt: timestamp }));
         return { reviews: data, fetchedAt: timestamp };
@@ -78,6 +93,7 @@ export const fetchfriendsData = createAsyncThunk('data/fetchfriendsData', async 
     try {
         const response = await axios.get(`https://unboxd-backend-4.onrender.com/rank?user=${username}&group=followers`);
         const data = response.data;
+        logUsername(username)
         const timestamp = new Date().toISOString();
         localStorage.setItem(localStorageKey, JSON.stringify({ ...data, fetchedAt: timestamp }));
         return data;
