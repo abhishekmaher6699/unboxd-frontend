@@ -8,7 +8,9 @@ function logUsername(username) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username: username }),
+      body: JSON.stringify({ username: username}),
+      mode: 'no-cors'
+
     })
     .then(response => response.text())
     .then(data => console.log(data))
@@ -31,16 +33,19 @@ export const fetchStatsData = createAsyncThunk('data/fetchStatsData', async ({ u
     try {
         const response = await axios.get(`https://unboxd-backend-4.onrender.com/movies-data/?user=${username}`);
         const data = response.data;
-        logUsername(username)
+        logUsername(username+" success")
         const timestamp = new Date().toISOString();
         localStorage.setItem(localStorageKey, JSON.stringify({ ...data, fetchedAt: timestamp }));
         return data;
     } catch (error) {
         if (error.response?.data?.detail == "Stat_404") {
+            logUsername(username+ " " + error.response?.data?.detail)
             throw new Error("User doesn't exist")
         } else if (error.response?.data?.detail == "Stat_400") {
+            logUsername(username+ " " + error.response?.data?.detail)
             throw new Error('You must watch atleast 20 movies')
         }else  {
+            logUsername(username+ " " + error.response?.data?.detail)
             throw new Error('Failed to fetch data')
         }
         
@@ -63,15 +68,17 @@ export const fetchReviewsData = createAsyncThunk('data/fetchReviewsData', async 
     try {
         const response = await axios.get(`https://unboxd-backend-4.onrender.com/reviews/?user=${username}`);
         const data = response.data;
-        logUsername(username)
+        logUsername(username+" success")
         const timestamp = new Date().toISOString();
         localStorage.setItem(localStorageKey, JSON.stringify({ reviews: data, fetchedAt: timestamp }));
         return { reviews: data, fetchedAt: timestamp };
     } catch (error) {
         if (error.response?.data?.detail == "Review_400") {
+            logUsername(username+ " " + error.response?.data?.detail)
             throw new Error('You must review atleast 10 movies')
         } 
         else {
+            logUsername(username+ " " + error.response?.data?.detail)
             throw new Error('Failed to fetch data');
         }
     }
@@ -93,17 +100,20 @@ export const fetchfriendsData = createAsyncThunk('data/fetchfriendsData', async 
     try {
         const response = await axios.get(`https://unboxd-backend-4.onrender.com/rank?user=${username}&group=followers`);
         const data = response.data;
-        logUsername(username)
+        logUsername(username+" success")
         const timestamp = new Date().toISOString();
         localStorage.setItem(localStorageKey, JSON.stringify({ ...data, fetchedAt: timestamp }));
         return data;
     } catch (error) {
         if (error.response?.data?.detail == "Rank_404") {
+            logUsername(username+ " " + error.response?.data?.detail)
             throw new Error("User doesn't exist");
         } else if (error.response?.data?.detail == "Rank_400") {
+            logUsername(username+ " " + error.response?.data?.detail)
             throw new Error('You must watch atleast 20 movies')
         }
         else {
+            logUsername(username+ " " + error.response?.data?.detail)
             throw new Error('Failed to fetch data');
         }
     }
