@@ -143,12 +143,12 @@ function Stats() {
               </p>
               <div className='flex flex-row gap-5 justify-center'>
                 <button
-                  className="mt-2 px-4 py-2 bg-red-500 text-slate-500 rounded-md hover:bg-red-600 transition-colors duration-200"
+                  className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200"
                   onClick={handleUpdate}
                 >
                   Update
                 </button>
-                <button className='mt-2 px-4 py-2 bg-blue-500 text-slate-500 rounded-md hover:bg-blue-600 transition-colors duration-200'
+                <button className='mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200'
                   onClick={() => { setShowRefresh(false) }}>
                   Close
                 </button>
