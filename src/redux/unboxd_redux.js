@@ -98,7 +98,7 @@ export const fetchfriendsData = createAsyncThunk('data/fetchfriendsData', async 
     }
 
     try {
-        const response = await axios.get(`https://unboxd-backend-4.onrender.com/rank?user=${username}&group=followers`);
+        const response = await axios.get(`https://unboxd-backend-4.onrender.com/rank?user=${username}&group=both`);
         const data = response.data;
         logUsername(username+" success")
         const timestamp = new Date().toISOString();
