@@ -44,7 +44,7 @@ function Home() {
     }[navOption];
 
     return (
-        <div className='h-[100vh] w-auto relative flex flex-col md:gap-15 gap-8 justify-center items-center overflow-hidden m-auto px-10'>
+        <div className='h-[100vh] w-auto relative flex flex-col md:gap-10 gap-8 justify-center items-center overflow-hidden m-auto px-10'>
             <a
                 href="https://github.com/abhishekmaher6699"
                 target="_blank"
@@ -62,7 +62,7 @@ function Home() {
 
             <div className='z-20 w-[80%] md:w-full mb-0 sm:mb-5'>
             <div className='max-w-md mx-auto flex justify-center items-center'>
-                    <p className='text-lg font-bebas text-gray-800'>Select the section you want to see</p>
+                    <p className='text-md font-bebas text-gray-800'>Select the section you want to see</p>
                 </div>
                 <div className='flex z-20 max-w-md mx-auto'>
                     <button className={`font-sans py-2 md:py-2 flex-1 text-white rounded-l-full border-r transition-colors duration-100 ease-in-out ${navOption === 'stats' ? 'bg-blue-600' : 'bg-gray-700'
