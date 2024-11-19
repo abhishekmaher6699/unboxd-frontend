@@ -9,14 +9,13 @@ import LiketoWatchList from './stats_components/LiketoWatchList';
 import Runtime from './stats_components/Runtime';
 import HighRatedThemes from './stats_components/HighRatedThemes';
 import BarGraph from './stats_components/BarGraph';
-import ChoroplethMap from './stats_components/Map';
 import Timeline from './stats_components/TimeLine';
-import MovieList from './stats_components/MovieList';
 import Scores from './stats_components/Scores';
 import UserType from './stats_components/UserType';
 import Screenshots from './stats_components/Screenshots';
 import StatsLoading from './stats_components/StatsLoading';
 import StatsError from './stats_components/Error';
+import OutdatedData from './OutdatedData';
 import { FaGithub } from 'react-icons/fa';
 import MapSection from './stats_components/MapSection';
 import { TWO_DAYS_MS } from '../utils/objects';
@@ -25,21 +24,12 @@ import { fetchStatsData } from '../redux/unboxd_redux';
 function Stats() {
   const navigate = useNavigate()
   const location = useLocation()
-  const dispatch = useDispatch()
   const { stats, stats_username, stats_loading, stats_error } = useSelector((state) => state.data);
   const [data, setdata] = useState(null)
   const [currentUsername, setCurrentUsername] = useState('');
   const [isLoadingFromRedux, setIsLoadingFromRedux] = useState(false);
   const [fetchedAtTime, setFetchedAtTime] = useState(null);
   const [showRefresh, setShowRefresh] = useState(false);
-
-  const handleUpdate = (event) => {
-    event.preventDefault();
-    if (currentUsername) {
-      dispatch(fetchStatsData({ username: currentUsername, forceRefresh: true }))
-      setShowRefresh(false)
-    }
-  }
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("current_stats_username");
@@ -133,28 +123,7 @@ function Stats() {
           </div>
           {/* Basic Info */}
           {showRefresh && (
-            <div className="border border-red-500 p-4 w-[90%] md:w-[40%] mb-4 rounded-md text-center mt-4">
-              <h1 className='text-gray-700 mb-2 lext'>Outdated Data!</h1>
-              <p className="text-gray-700 mb-2">
-                This data was fetched on <span className="font-semibold">{fetchedAtTime}</span>.
-              </p>
-              <p className="text-gray-700 mb-2">
-                You can update it if you have made any changes in you LB profile.
-              </p>
-              <div className='flex flex-row gap-5 justify-center'>
-                <button
-                  className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200"
-                  onClick={handleUpdate}
-                >
-                  Update
-                </button>
-                <button className='mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200'
-                  onClick={() => { setShowRefresh(false) }}>
-                  Close
-                </button>
-              </div>
-
-            </div>
+              <OutdatedData fetchFunc={fetchStatsData} fetchedAtTime={fetchedAtTime} currentUsername={currentUsername} setShowRefresh={setShowRefresh}/>
           )}
 
           <div className='w-full flex flex-col items-center gap-5 mt-5'>

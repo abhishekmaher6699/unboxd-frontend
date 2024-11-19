@@ -8,6 +8,7 @@ import RecommendationsList from './Friends_component/Recomendations';
 import { FaGithub } from 'react-icons/fa';
 import { TWO_DAYS_MS } from '../utils/objects';
 import {setfriendsUsername, fetchfriendsData } from '../redux/unboxd_redux';
+import OutdatedData from './OutdatedData';
 
 function Network() {
   const navigate = useNavigate();
@@ -18,16 +19,6 @@ function Network() {
   const [fetchedAtTime, setFetchedAtTime] = useState(null);
   const [showRefresh, setShowRefresh] = useState(false);
   const [isLoadingFromRedux, setIsLoadingFromRedux] = useState(false);
-
-  const dispatch = useDispatch()
-
-  const handleUpdate = (event) => {
-    event.preventDefault();
-    if (currentUsername){
-      dispatch(fetchfriendsData({ username: currentUsername, forceRefresh: true }))
-      setShowRefresh(false)
-    }
-  }
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("current_friends_username");
@@ -120,28 +111,7 @@ function Network() {
             </p>
           </div>
           {showRefresh && (
-            <div className="border border-red-500 p-4 w-[90%] md:w-[40%]  rounded-md text-center mt-4">
-              <h1 className='text-gray-700 mb-2 lext'>Outdated Data!</h1>
-              <p className="text-gray-700 mb-2">
-                This data was fetched on <span className="font-semibold">{fetchedAtTime}</span>.
-              </p>
-              <p className="text-gray-700 mb-2">
-                You can update it if you have made any changes in you LB profile.
-              </p>
-              <div className='flex flex-row gap-5 justify-center'>
-              <button
-                className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200"
-                onClick={handleUpdate}
-              >
-                Update
-              </button>
-              <button className='mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200'
-              onClick={() => {setShowRefresh(false)}}>
-                Close
-              </button>
-              </div>
-
-            </div>
+              <OutdatedData fetchFunc={fetchfriendsData} fetchedAtTime={fetchedAtTime} currentUsername={currentUsername} setShowRefresh={setShowRefresh}/>
           )}
           <div>
             <p className='font-oswald text-xl sm:text-2xl'>{currentUsername}</p>

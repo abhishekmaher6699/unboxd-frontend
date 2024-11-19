@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import StatsLoading from './stats_components/StatsLoading';
 import StatsError from './stats_components/Error';
 import Summary from './Reviews_components/Summary';
@@ -10,11 +10,11 @@ import Gemini from './Reviews_components/Gemini';
 import { FaGithub } from 'react-icons/fa';
 import { TWO_DAYS_MS } from '../utils/objects';
 import { fetchReviewsData } from '../redux/unboxd_redux';
+import OutdatedData from './OutdatedData';
 
 function Reviews() {
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
   const { reviews, reviews_username, reviews_loading, reviews_error } = useSelector((state) => state.data);
   const [data, setData] = useState(null);
   const [currentUsername, setCurrentUsername] = useState('');
@@ -22,14 +22,6 @@ function Reviews() {
   const [fetchedAtTime, setFetchedAtTime] = useState(null);
   const [showRefresh, setShowRefresh] = useState(false);
 
-  
-  const handleUpdate = (event) => {
-    event.preventDefault();
-    if (currentUsername){
-      dispatch(fetchReviewsData({ username: currentUsername, forceRefresh: true }))
-      setShowRefresh(false)
-    }
-  }
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("current_review_username");
@@ -70,7 +62,7 @@ function Reviews() {
         const currentTime = Date.now();
 
         setFetchedAtTime(new Date(parsedData.fetchedAt).toLocaleString());
-        if (currentTime - fetchedAt >= 1 * 60 * 60 * 24 * 1000 && currentTime - fetchedAt < TWO_DAYS_MS) {
+        if (currentTime - fetchedAt >= 1 * 60 * 60 * 24 * 1000  && currentTime - fetchedAt < TWO_DAYS_MS) {
           setShowRefresh(true)
         }
         if (currentTime - fetchedAt < TWO_DAYS_MS) {
@@ -121,28 +113,7 @@ function Reviews() {
             </p>
           </div>
           {showRefresh && (
-            <div className="border border-red-500 p-4 w-[90%] md:w-[40%]  rounded-md text-center mt-4">
-              <h1 className='text-gray-700 mb-2 lext'>Outdated Data!</h1>
-              <p className="text-gray-700 mb-2">
-                This data was fetched on <span className="font-semibold">{fetchedAtTime}</span>.
-              </p>
-              <p className="text-gray-700 mb-2">
-                You can update it if you have made any changes in you LB profile.
-              </p>
-              <div className='flex flex-row gap-5 justify-center'>
-              <button
-                className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200"
-                onClick={handleUpdate}
-              >
-                Update
-              </button>
-              <button className='mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200'
-              onClick={() => {setShowRefresh(false)}}>
-                Close
-              </button>
-              </div>
-
-            </div>
+            <OutdatedData fetchFunc={fetchReviewsData} currentUsername={currentUsername} fetchedAtTime={fetchedAtTime} setShowRefresh={setShowRefresh} />
           )}
           <div>
             <p className='font-oswald text-xl sm:text-2xl'> {currentUsername}</p>
