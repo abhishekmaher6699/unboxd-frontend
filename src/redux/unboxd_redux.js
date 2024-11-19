@@ -33,7 +33,7 @@ export const fetchStatsData = createAsyncThunk('data/fetchStatsData', async ({ u
     try {
         const response = await axios.get(`https://unboxd-backend-4.onrender.com/movies-data/?user=${username}`);
         const data = response.data;
-        logUsername(username+" success")
+        logUsername(username+" stats success")
         const timestamp = new Date().toISOString();
         localStorage.setItem(localStorageKey, JSON.stringify({ ...data, fetchedAt: timestamp }));
         return data;
@@ -68,7 +68,7 @@ export const fetchReviewsData = createAsyncThunk('data/fetchReviewsData', async 
     try {
         const response = await axios.get(`https://unboxd-backend-4.onrender.com/reviews/?user=${username}`);
         const data = response.data;
-        logUsername(username+" success")
+        logUsername(username+" reviews success")
         const timestamp = new Date().toISOString();
         localStorage.setItem(localStorageKey, JSON.stringify({ reviews: data, fetchedAt: timestamp }));
         return { reviews: data, fetchedAt: timestamp };
@@ -100,7 +100,7 @@ export const fetchfriendsData = createAsyncThunk('data/fetchfriendsData', async 
     try {
         const response = await axios.get(`https://unboxd-backend-4.onrender.com/rank?user=${username}&group=both`);
         const data = response.data;
-        logUsername(username+" success")
+        logUsername(username+" friends success")
         const timestamp = new Date().toISOString();
         localStorage.setItem(localStorageKey, JSON.stringify({ ...data, fetchedAt: timestamp }));
         return data;
