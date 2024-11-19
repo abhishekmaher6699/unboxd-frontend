@@ -11,22 +11,25 @@ function Sidebar() {
   ];
 
   return (
-    <div className="z-20 fixed bg-gray-600 bg-opacity-90 bottom-5 sm:bottom-auto left-1/4 sm:top-1/4 sm:left-2 h-auto sm:w-16 flex sm:flex-col items-center px-4 sm:px-0 py-2 sm:py-4 gap-2 rounded-full shadow-lg">
-      {navItems.map((item) => (
-        <NavLink
-          key={item.label}
-          to={item.path}
-          className={({ isActive }) =>
-            isActive
-              ? `text-white ${item.activeColor} w-10 h-10 flex justify-center items-center rounded-full`
-              
-              : 'text-gray-400 hover:text-white hover:bg-gray-700 w-10 h-10 flex justify-center items-center rounded-full'
-          }
-        >
-          {item.icon}
-        </NavLink>
-      ))}
+    <div className='z-20 sm:h-screen h-auto w-screen sm:w-auto fixed bottom-5 sm:bottom-auto flex sm:items-center justify-center sm:justify-normal left-auto sm:left-2 '>
+      <div className="z-20 bg-gray-800 bg-opacity-90 h-auto sm:w-16 flex sm:flex-col items-center px-4 sm:px-0 py-2 sm:py-4 gap-2 rounded-full shadow-lg">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.label}
+            to={item.path}
+            className={({ isActive }) =>
+              isActive
+                ? `text-white ${item.activeColor} w-10 h-10 flex justify-center items-center rounded-full`
+
+                : 'text-gray-400 hover:text-white hover:bg-gray-700 w-10 h-10 flex justify-center items-center rounded-full'
+            }
+          >
+            {item.icon}
+          </NavLink>
+        ))}
+      </div>
     </div>
+
   );
 }
 

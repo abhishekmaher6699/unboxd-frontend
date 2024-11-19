@@ -16,7 +16,7 @@ function App() {
     <Router>
     <Analytics/>
     {/* <SpeedInsights/> */}
-      <div className='relative'>
+      <div>
         <Sidebar />
         <div> 
           <Routes>
