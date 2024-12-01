@@ -1,8 +1,23 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# UnBoxd
 
-Currently, two official plugins are available:
+A Web App made using React with FastAPI backend to analyze and display your movie taste and watching behaviour. It scrapes data from your Letterboxd account, processes it and shows it graphically. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+
+## Features
+
+- Shows your movie stats and habits.
+- Shows your movie watcher type
+- Review analysis using AI
+- Shows friends with similar movie taste
+- Movie recommendations based on your friends' activity using a collaborative filtering model
+
+
+## 🛠 Skills
+- Frontend:
+     React JS, Tailwind CSS, Redux
+- Backend: Python, FastAPI, Web Scraping
+- Database: SQLite
+- Deployment: Vercel
+
