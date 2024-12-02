@@ -13,9 +13,10 @@ import OutdatedData from './OutdatedData';
 function Network() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { friends, friends_username, friends_loading, friends_error } = useSelector((state) => state.data);
+  const {friends, friends_username, friends_loading, friends_error } = useSelector((state) => state.data);
   const [data, setData] = useState(null);
   const [currentUsername, setCurrentUsername] = useState('');
+  const [redirected, setredirected] = useState(false)
   const [fetchedAtTime, setFetchedAtTime] = useState(null);
   const [showRefresh, setShowRefresh] = useState(false);
   const [isLoadingFromRedux, setIsLoadingFromRedux] = useState(false);
@@ -67,14 +68,17 @@ function Network() {
           setData(parsedData);
         } else {
           localStorage.removeItem(localStorageKey);
+          localStorage.removeItem('current_friends_username');
           setIsLoadingFromRedux(true);
           setData(null);
+          navigate('/', { state: { navOption: 'friends' } });
+          setredirected(true)
         }
       }
     }
   }, [friends_username, friends, friends_loading, location.state]);
 
-  if ((!data && currentUsername) && !location.state?.username && !isLoadingFromRedux) {
+  if (!redirected && !data && currentUsername && !isLoadingFromRedux) {
     localStorage.removeItem("current_friends_username")
     return <StatsError error={friends_error} />
   }

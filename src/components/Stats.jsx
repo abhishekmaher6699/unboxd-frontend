@@ -27,18 +27,28 @@ function Stats() {
   const { stats, stats_username, stats_loading, stats_error } = useSelector((state) => state.data);
   const [data, setdata] = useState(null)
   const [currentUsername, setCurrentUsername] = useState('');
+  const [redirected, setredirected] = useState(false)
   const [isLoadingFromRedux, setIsLoadingFromRedux] = useState(false);
   const [fetchedAtTime, setFetchedAtTime] = useState(null);
   const [showRefresh, setShowRefresh] = useState(false);
+
+  console.log(stats_loading)
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("current_stats_username");
     const isUsername = location.state?.username || stats_username || storedUsername;
 
+
     if (!isUsername) {
       navigate('/', { state: { navOption: 'stats' } });
       return;
     }
+
+    // if (!isUsername && stats_loading) {
+    //   navigate('/', { state: { navOption: 'stats' } });
+    //   return;
+    // }
+    
 
     setIsLoadingFromRedux(
       (stats_loading) ||
@@ -80,14 +90,18 @@ function Stats() {
 
         } else {
           localStorage.removeItem(localStorageKey);
+          localStorage.removeItem('current_stats_username');
           setIsLoadingFromRedux(true);
           setdata(null);
+          navigate('/', { state: { navOption: 'stats' } });
+          setredirected(true)
         }
       }
     }
   }, [stats_username, stats, stats_loading, location.state]);
 
-  if (!data && currentUsername && !location.state?.username && !isLoadingFromRedux) {
+  
+  if (!redirected && !data && currentUsername && !isLoadingFromRedux) {
     localStorage.removeItem("current_stats_username")
     return <StatsError error={stats_error} />
   }

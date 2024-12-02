@@ -18,6 +18,7 @@ function Reviews() {
   const { reviews, reviews_username, reviews_loading, reviews_error } = useSelector((state) => state.data);
   const [data, setData] = useState(null);
   const [currentUsername, setCurrentUsername] = useState('');
+  const [redirected, setredirected] = useState(false)
   const [isLoadingFromRedux, setIsLoadingFromRedux] = useState(false);
   const [fetchedAtTime, setFetchedAtTime] = useState(null);
   const [showRefresh, setShowRefresh] = useState(false);
@@ -69,14 +70,17 @@ function Reviews() {
           setData(parsedData.reviews);
         } else {
           localStorage.removeItem(localStorageKey);
+          localStorage.removeItem('current_review_username');
           setIsLoadingFromRedux(true);
           setData(null);
+          navigate('/', { state: { navOption: 'reviews' } });
+          setredirected(true)
         }
       }
     }
   }, [reviews_username, reviews, reviews_loading, location.state]);
 
-  if (!data && currentUsername && !location.state?.username && !isLoadingFromRedux) {
+  if (!redirected && !data && currentUsername && !isLoadingFromRedux) {
     localStorage.removeItem("current_review_username")
     return <StatsError error={reviews_error}/>
   }
